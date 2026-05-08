@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pyre/
+.pytype/
+
+# 虚拟环境
+.venv/
+venv/
+
+# 编辑器 swap / 临时文件
+*.swp
+*.swo
+.*.swp
+.*.swo
+*~
+
+# Cursor / Agent 会话状态（个人，不入 git）
+.cursor/task_plan.md
+.cursor/progress.md
+.cursor/findings.md
+.cursor/memory/
+
+# Claude Code 本地配置（每机不同）
+.claude/settings.local.json
+.claude/*.local.*
+
+# 本地配置
+.env
+.env.*
+!.env.example
+
+# OS / IDE 噪音
+.DS_Store
+.idea/
+.vscode/

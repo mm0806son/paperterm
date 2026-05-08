@@ -74,7 +74,7 @@
   - `core.md` 不含「开发阶段分离」：`! grep -q '开发阶段分离' .agent-rules/core.md`
   - `style.md` 不含「实验管理」：`! grep -q '实验管理' .agent-rules/style.md`
 - **Stage 1 commit**：`git add .agent-rules/` → 审核 staged 清单 → commit message `init(rules): add modular agent rule sources and sync script` → push
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage 2：搭 `.planning/` 与 `.cursor/memory/`
 - **目标**：
@@ -87,7 +87,7 @@
   - `test ! -e paperterm_plan.md`（旧位置已不存在）
   - `test -f .cursor/memory/MEMORY.md`
 - **Stage 2 commit**：`git add .planning/README.md .planning/20260508_paperterm_v0.1_design.md` —— **不**添加 `.cursor/memory/MEMORY.md`（D9）；commit message `init(planning): move design doc and add planning README` → push
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage 3：重写 `README.md` + 创建 `.gitignore`
 - **目标**：
@@ -100,7 +100,7 @@
   - 验证 swap 文件被忽略：若 `.planning/.20260508_init_vibe_coding.md.swp` 存在，则 `git check-ignore -q .planning/.20260508_init_vibe_coding.md.swp` 退出码 0
   - 验证本地 Claude 配置被忽略：`git check-ignore -q .claude/settings.local.json` 退出码 0
 - **Stage 3 commit**：`git add .gitignore README.md` → 审核 staged 清单（不应含 `.claude/settings.local.json`、`*.swp`、`.cursor/memory/`） → commit message `init: add .gitignore and paperterm README stub` → push
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage 4：跑 sync + 验证
 - **目标**：
@@ -113,7 +113,7 @@
   - `! grep -E 'data/|experiments/' CLAUDE.md AGENTS.md`（目录规范已按 paperterm 实际结构裁剪）
   - 幂等性：先 `python3 .agent-rules/sync_agent_rules.py` 跑一次，`md5sum CLAUDE.md AGENTS.md` 记录哈希；再跑一次，`md5sum` 完全相同
 - **Stage 4 commit**：`git add CLAUDE.md AGENTS.md` → 审核 staged 清单（不应再含 `{{` 字串） → commit message `init: regenerate CLAUDE.md and AGENTS.md from agent-rules` → push
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage 5：追加完成记录 + 最终 commit/push（封档）
 - **目标**：本规划文档末尾追加 `## 完成记录`，逐条列出 5 个 Stage 的实际完成时间、是否有偏差、对应 commit hash；至此整个初始化任务封档。
@@ -130,7 +130,7 @@
   - `git status --short --ignored` 仅显示 `.cursor/memory/` / `.venv/` 等预期 ignored 项（用于人工 sanity check）
   - `git rev-parse HEAD` == `git ls-remote --heads origin main | awk '{print $1}'`
   - 远端 GitHub 网页刷新可见 6 个 commit（Stage 0 + Stage 1–5）
-- **状态**：Not Started
+- **状态**：Complete
 
 ---
 
@@ -249,3 +249,31 @@ venv/
 3. （sanity）`git status --short` 此时会显示 staged 的本规划文件 + 其他 untracked（`AGENTS.md` / `CLAUDE.md` / `README.md` / `paperterm_plan.md` / `.planning/.swp` 等）。这些 untracked 是预期的，将在后续 Stage 处理；不属于 Stage 0 commit
 4. commit message：`docs(planning): add init plan for vibe coding scaffold`
 5. `git push -u origin main`（首次 push，设置 upstream）
+
+---
+
+## 完成记录
+
+| Stage | 内容 | Commit | 状态 |
+|---|---|---|---|
+| Stage 0 | 本规划文档 codex 三审通过后 commit + push（首次 push 切到 SSH remote） | `bde6b57` | Complete |
+| Stage 1 | `.agent-rules/` 三 md + `sync_agent_rules.py`（stdlib only），codex 审 + 4 处修订（语言规范扩展、Prompt 单源规则、空源校验、错误捕获、`print-prompt` 命令） | `81ece22` | Complete |
+| Stage 2 | `.planning/README.md` + `mv paperterm_plan.md → .planning/20260508_paperterm_v0.1_design.md` + `.cursor/memory/MEMORY.md`（本地占位不入 git） | `f50e07c` | Complete |
+| Stage 3 | README.md 中文 stub（18 行）+ `.gitignore`（含 swap/Cursor state/Claude local），`git check-ignore` 验证三类文件均 ignored | `715b4bd` | Complete |
+| Stage 4 | `python3 .agent-rules/sync_agent_rules.py` 重生成 CLAUDE.md (7514c) + AGENTS.md (6657c)，幂等性验证（连跑两次 md5sum 完全一致） | `bdefc39` | Complete |
+| Stage 5 | 本节追加 + 最终 commit + push 封档 | _本提交_ | Complete |
+
+**总计**：6 commits，远端 `https://github.com/mm0806son/paperterm` `main` 分支 fast-forward 推送，无 merge commit、无 force push。
+
+**完成时间**（UTC）：2026-05-08T17:46Z（本地 2026-05-09 凌晨）
+
+**实际偏差与备注**：
+- Stage 0 push 卡过一次：默认 HTTPS remote + 无可用 credential helper（VS Code git socket 不在当前 shell），经用户确认切到 SSH remote 后通过
+- 每个 Stage 在 commit 前都经 codex 至少一轮审查，平均收到 3–5 处具体反馈，全部 inline 修订后再 commit
+- 无源码改动（plan §12 Phase 1 的所有内容均未触碰：未创建 `pyproject.toml` / `LICENSE` / `src/paperterm/` / `tests/`）
+- README 描述的 `pip install -e ".[anthropic,dev]"` 当前会失败（因为 `pyproject.toml` 未创建），这是预期的 — 用户明确不希望加「设计阶段，无源码」类免责描述
+
+**下次会话续接入口**：
+- 阅读本规划文档了解初始化已完成
+- 阅读 `.planning/20260508_paperterm_v0.1_design.md` 了解 paperterm v0.1 完整设计
+- 进入 plan §12 Phase 1（项目骨架）开始实际开发，按 `先规划 → codex 审 → 实施 → 测试 → 提交` 标准流程

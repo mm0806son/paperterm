@@ -55,6 +55,11 @@ packages = ["src/paperterm"]
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+# `.agent-rules/sync_agent_rules.py` is a workflow script outside the
+# paperterm package (its multi-line markdown headers legitimately
+# exceed 100 columns); excluded so paperterm's lint surface stays
+# focused on src/ and tests/.
+extend-exclude = [".agent-rules", "example", ".planning"]
 
 [tool.ruff.lint]
 select = [

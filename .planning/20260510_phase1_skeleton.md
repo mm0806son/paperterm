@@ -61,7 +61,7 @@
   - 含「Version 2.0」字符串：`grep -q 'Version 2.0' LICENSE`
   - 末尾的版权 placeholder 块已替换（不能含字面 `[yyyy] [name of copyright owner]`）：`! grep -E '\[yyyy\]|\[name of copyright owner\]' LICENSE`
 - **commit**：`init: add Apache-2.0 LICENSE`
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage P1.B: 创建 `pyproject.toml`（含工具链配置）
 
@@ -87,7 +87,7 @@
   - `target-version = "py310"`：`grep -q 'target-version = "py310"' pyproject.toml`
   - `python_version = "3.10"`：`grep -q 'python_version = "3.10"' pyproject.toml`
 - **commit**：`init: add pyproject.toml with hatch backend and tool configs`
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage P1.C: 创建 `src/paperterm/` 包 + CLI 骨架
 
@@ -112,7 +112,7 @@
   - `.venv/bin/python -c 'from importlib.metadata import version; print(version("paperterm"))'` 输出 `0.1.0.dev0`（验证 Hatch dynamic 把 `__version__` 正确挂到了 distribution metadata）
   - **`cli.py` 不含字面 `0.1.0`**：`! grep -F '0.1.0' src/paperterm/cli.py`（验证 SoT 没漂移）
 - **commit**：`feat(cli): scaffold paperterm package with version subcommand`
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage P1.D: 创建 `tests/` 包 + 一个 dummy 测试
 
@@ -132,7 +132,7 @@
   - `.venv/bin/mypy src/paperterm/` exit 0
   - `tests/test_version.py` 至少 2 个 test function（CLI test + module-level `__version__` test）
 - **commit**：`test: scaffold tests/ with version smoke tests`
-- **状态**：Not Started
+- **状态**：Complete
 
 ---
 
@@ -187,3 +187,21 @@ Stage P1.D 实施 → codex 审 tests/test_version.py
 ## 执行批准
 
 写完本规划后，先送 codex 审本任务方案；通过后开始 Stage P1.A。
+
+---
+
+## 完成记录
+
+| Stage | 内容 | Commit |
+|---|---|---|
+| Stage 0 | 规划 codex 二审通过 + commit + push | `572de71` |
+| Stage P1.A | LICENSE (Apache 2.0, 201 行) | `39371de` |
+| Stage P1.B | pyproject.toml (hatchling≥1.27, dynamic version, click only) | `41a5120` |
+| Stage P1.C | src/paperterm/{__init__,__main__,cli,py.typed} + .venv + editable install 自检 | `3cea4be` |
+| Stage P1.D | tests/ + ruff extend-exclude；pytest/ruff/mypy 全绿 | `51895ea` |
+
+**Phase 1 完成判据 (plan §12)**：✓ `pip install -e .` works；✓ `paperterm version` 输出 `paperterm 0.1.0.dev0`；✓ pytest 2 passed。
+
+**偏差备注**：
+- P1.D 顺手改了 P1.B 的 pyproject.toml（加 ruff `extend-exclude`），跨 Stage 修订；理由：lint 排除是 quality gate 配置，发现需求是在跑 ruff 时才暴露的，归 P1.D 范畴
+- P1.A 之后 / P1.C 之前的中间 commit 处于「不可装」状态（已在规划「中间 commit 不可用的代价」节预告，user 已接受）

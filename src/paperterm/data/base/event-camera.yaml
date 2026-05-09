@@ -1,0 +1,64 @@
+# paperterm built-in base glossary: event-camera / neuromorphic vision
+# terminology that drifts particularly often across papers in the field.
+#
+# Imported via:
+#   extends:
+#     - paperterm:base/event-camera.yaml
+#
+# Concepts here are deliberately *generic* (sensor names, generic event
+# representations); paper-specific metrics or models should live in
+# the paper's own glossary.yaml.
+
+version: 1
+
+defaults:
+  case_sensitive: false
+  whole_word: true
+
+concepts:
+  - id: event_camera
+    category: other
+    canonical: "event camera"
+    aliases:
+      - form: "event-based camera"
+      - form: "neuromorphic camera"
+        suggest: "event camera"
+      - form: "silicon retina"
+        suggest: "event camera"
+
+  - id: dynamic_vision_sensor
+    category: model
+    canonical: "Dynamic Vision Sensor"
+    case_sensitive: true
+    allowed_forms:
+      - form: "DVS"
+        contexts: any
+    aliases:
+      - form: "dynamic vision sensor"
+        suggest: "Dynamic Vision Sensor"
+      - form: "dvs sensor"
+
+  - id: event_polarity
+    category: pipeline
+    canonical: "event polarity"
+    aliases:
+      - form: "polarity bit"
+      - form: "ON/OFF polarity"
+      - form: "event sign"
+
+  - id: contrast_threshold
+    category: pipeline
+    canonical: "contrast threshold"
+    aliases:
+      - form: "C threshold"
+      - form: "log-intensity threshold"
+      - form: "trigger threshold"
+
+  - id: event_stream
+    category: other
+    canonical: "event stream"
+    aliases:
+      - form: "spike train"
+        suggest: "event stream"
+      - form: "asynchronous event sequence"
+      - form: "event packet"

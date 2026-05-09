@@ -1,0 +1,71 @@
+# paperterm built-in base glossary: common machine-learning terminology.
+#
+# Imported via:
+#   extends:
+#     - paperterm:base/ml-common.yaml
+#
+# Scope: terms that are not specific to any sub-field (CV, NLP, ...) and
+# whose name drift is so common we ship a default for it. Sub-field
+# specific terminology lives in sibling files (cv-common.yaml,
+# event-camera.yaml, ...).
+#
+# When in doubt, keep this file small: per-paper glossaries can always
+# add more concepts; downstream papers cannot easily *remove* a noisy
+# entry once it is here.
+
+version: 1
+
+defaults:
+  case_sensitive: false
+  whole_word: true
+
+concepts:
+  - id: f1_score
+    category: metric
+    canonical: "F1 score"
+    aliases:
+      - form: "F-1 score"
+      - form: "F1-score"
+      - form: "F1"
+        contexts: [table, figure, caption]
+        suggest: "F1 score"
+
+  - id: accuracy
+    category: metric
+    canonical: "accuracy"
+    allowed_forms:
+      - form: "Acc."
+        contexts: [table, figure, caption]
+      - form: "acc"
+        contexts: [table, figure, caption]
+        case_sensitive: true
+    aliases:
+      - form: "accuracy score"
+      - form: "Accuracy %"
+
+  - id: cross_entropy_loss
+    category: pipeline
+    canonical: "cross-entropy loss"
+    aliases:
+      - form: "cross entropy loss"
+      - form: "CE loss"
+      - form: "softmax cross-entropy"
+
+  - id: stochastic_gradient_descent
+    category: pipeline
+    canonical: "stochastic gradient descent"
+    allowed_forms:
+      - form: "SGD"
+        contexts: any
+    aliases:
+      - form: "Stochastic Gradient Descent"
+        case_sensitive: true
+        suggest: "stochastic gradient descent"
+
+  - id: train_test_split
+    category: pipeline
+    canonical: "train/test split"
+    aliases:
+      - form: "training/testing split"
+      - form: "train-test split"
+      - form: "train/test partition"

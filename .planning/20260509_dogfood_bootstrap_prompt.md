@@ -59,7 +59,7 @@
   - 长度区间：`[ $(wc -l < example/prompt.md) -ge 150 ] && [ $(wc -l < example/prompt.md) -le 600 ]`
   - **paper-agnostic 硬校验**：`example/prompt.md` 必须是**完全通用**的 standalone prompt（plan §8.5 设计意图），**不含任何 raw2event 任务上下文**；目标论文路径仅通过 Stage T4 的 subagent brief + manifest 注入。校验：`! grep -iE 'polarity deviation|per-pixel emd|davis346|raw2event|dvs-voltmeter|qkformer' example/prompt.md`（这些是 raw2event 已知概念或 plan 内置示例，worked example 里也不许）
   - **schema 字段一致性硬校验**：`! grep -q 'suggested_canonical' example/prompt.md`（统一用 `canonical`）；`! grep -E '^bootstrap:' example/prompt.md`（不允许顶层 `bootstrap` 字段）
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage T2：codex 审 prompt 设计（执行 subagent 前的硬卡点）
 
@@ -70,7 +70,7 @@
   4. 输出格式约束清楚（避免 LLM 输出散文 + yaml 混合；明确「直接输出合法 YAML，不带任何 ```yaml fence」或反之，二选一并明示）
   5. subagent 能否在没有 AST 的情况下按 prompt 自律
 - **成功标准**：codex 给出明确「批准 / 不批准」结论；**若不批准则修订后重审，循环直到批准再进 T3**（每轮 codex 反馈在本规划文档「修订记录」节追加一行）
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage T3：准备 corpus manifest（`example/inputs/corpus_manifest.txt`）
 
@@ -88,8 +88,8 @@
 - **成功标准**：
   - `test -f example/inputs/corpus_manifest.txt`
   - 每条路径用 `test -f` 校验存在
-  - 总行数估算（manifest 中文件 wc -l 加和）≤ 2000 行（plan §8.4 corpus 长度估算 3000-token cap × 多 chunk OK，但单一 chunk 模式宁可一次过）
-- **状态**：Not Started
+  - 总行数估算（manifest 中文件 wc -l 加和）：**无硬上限**（用户后续指示：长度按需求来，宁可让用户分章节传入也要保障 LLM 抽取质量）。本次 dogfood 总行数 2200，single-pass 走通；若未来某次 corpus 超出 LLM 单 pass sweet spot，使用 prompt.md 中新加的「Chunked input mode」分轮投喂，prompt 自带 ACK + 跨轮合并规则
+- **状态**：Complete
 
 ### Stage T4：subagent 跑（dogfood 主体）
 
@@ -114,7 +114,7 @@
   - 后验校验 — subagent 无越权写入：
     - `git status --short --untracked-files=all` 输出排序后与 `.cursor/dogfood_baseline_paperterm.txt` 对比，新增项**全部**在 `example/` 内
     - `git -C /vol1/1007/projects/raw2event status --short` 输出必须与 `.cursor/dogfood_baseline_raw2event.txt` 完全一致（diff 0）；若 raw2event 不是 git 仓库则 fallback `find /vol1/1007/projects/raw2event -newer .cursor/dogfood_baseline_raw2event.txt -type f` 无输出
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage T5：人工评估（`example/findings.md`）
 
@@ -131,7 +131,7 @@
   - 包含六节：人工 ground truth seeds / 覆盖矩阵 / drift 分布 / 行号抽样 / 跳过规则评估 / prompt+schema 缺陷
   - 「人工 ground truth seeds」节含 3 条手抽术语 + 命中状态（每条 ✓ / ✗ + 备注）
   - 至少给出 3 条 prompt 缺陷与 1 条 schema 缺陷（如果都没有缺陷，说明评估太松，prompt 可能漏抓）
-- **状态**：Not Started
+- **状态**：Complete
 
 ### Stage T6：写 `example/README.md` + codex 终审 + commit + push
 
@@ -156,7 +156,7 @@
   - **物理 .tex/.bib 防泄漏**：`find example -type f \( -name '*.tex' -o -name '*.bib' \)` 无输出
   - **正文长引用人工抽查**：`run_log.md` / `findings.md` / `glossary.draft.yaml`（含 `notes` 与 `locations` 字段）三者都不允许有 ≥10 行的连续 raw2event .tex 原文引用（人工 grep + 视觉检查）
   - push 后远端 HEAD == 本地 HEAD
-- **状态**：Not Started
+- **状态**：Complete
 
 ---
 
@@ -188,7 +188,40 @@
   1. 「7 处修订」笔误 → 「8 处修订」
   2. Stage T1 反污染硬校验：明确 `example/prompt.md` 是**完全通用**的 paper-agnostic standalone prompt，不含 raw2event 任务上下文，目标路径仅通过 subagent brief + manifest 注入（避免反污染 grep 误杀合法任务说明）
   3. Stage T6 长引用抽查范围：在 `run_log.md` / `findings.md` 之外加入 `glossary.draft.yaml`（locations / notes 字段也可能塞原文）
+- 2026-05-09 用户反馈（subagent 跑完后）→ 2 处调整：
+  1. 删除 corpus_manifest 「≤ 3000 行」硬上限：用户原话「这个长度限制按需求吧，可以要求用户分章节传入。优先保障大模型参与的流程的生成质量」；本次 dogfood 2200 行 single-pass 已走通，限制只是历史保守值
+  2. `example/prompt.md` 新增「Chunked input mode」节：明确分轮投喂协议（每轮以 `=== CHUNK BREAK ===` 结尾，最后一轮以 `=== END CORPUS ===` 结尾），LLM 对中间轮回 `ACK: chunk N received, K running concepts, M running forms`，最后一轮才 emit 最终合并 YAML；含跨轮 merge 规则（`form` 字节相同则合并 count + locations，否则保持独立 form；confidence 取多轮**最大值**，对齐 plan §8.4「id 冲突时保留 confidence 高者」；后续 chunk 发现需要 split 则 split 并写 notes）
 
 ## 执行批准
 
 写完本规划后，先送 codex 审本任务方案；通过后开始 Stage T1。
+
+---
+
+## 完成记录
+
+| Stage | 内容 | 状态 |
+|---|---|---|
+| Stage T0 | 规划文档 codex 三审通过后 commit `02380aa` + push | Complete |
+| Stage T1 | `example/prompt.md` (357 行 paper-agnostic) — codex 二审 4 处修订 | Complete |
+| Stage T2 | codex 在 T1 内嵌完成（不单独 commit） | Complete |
+| Stage T3 | `example/inputs/corpus_manifest.txt` (26 paths, 2200 lines) | Complete |
+| Stage T4 | general-purpose + Opus subagent 跑 single-pass 抽出 51 concepts；后验校验 raw2event HEAD/status 完全一致 | Complete |
+| Stage T5 | `example/findings.md` (218 行)，3/3 ground truth 命中、12 抽样行号 10/12 PASS、5 prompt 缺陷 + 3 schema 缺陷 ROI 排序 | Complete |
+| Stage T6 | README + codex 终审 + 一次性 commit（_本提交_）+ push | Complete |
+
+**完成时间**：以本 commit 的 git author timestamp 为准（commit hash 见 `git log` 第一条）
+
+**实际偏差与备注**：
+
+- **commit 数量**：本任务（dogfood）只产生 **2 个 commit**（Stage T0 plan + Stage T6 整体封档），与 vibe-coding-init 期间「每 Stage commit + push」的节奏不同。理由：dogfood 的 6 个产物彼此强耦合，独立 commit 价值低；中间 Stage 改动 prompt.md 等文件，最终一次入库审计更清晰。
+
+- **chunked input mode 未实测**：本次 corpus 2200 行 single-pass 走通；新加的 chunked 协议（`=== CHUNK BREAK ===` + ACK + 跨轮 merge）只有静态 review 验证，没有跑真实分轮投喂。留给未来 corpus 超出 LLM sweet spot 时再压测。
+
+- **行号抽样错误率 17%**（Raw2Event 在 35 个 location 中有 2 个错位；DAVIS346 / DVS-Voltmeter 全对）：佐证 plan §6.2 anthropic provider + AST 路径的必要性，是 dogfood 最大 ROI 发现，写入 findings.md §6 P1（最高 ROI 的 prompt 缺陷）。
+
+- **`.cursor/` 整目录 ignore**：Stage T6 commit 前发现 `.cursor/dogfood_baseline_*.txt`（subagent 越权校验用的 baseline）未被 ignore；codex 复审拦下。把 `.gitignore` 中 `.cursor/<具体 4 文件>` 改为 `.cursor/` 整目录 ignore，本 commit 同时携带该 .gitignore 改动（白名单从 7 文件扩为 8 文件）。
+
+- **`example/findings.md` 「ground truth seeds 是事后抽」执行偏差**：规划 Stage T5 要求主 agent 在跑 subagent **之前**手抽 seeds，但实际执行时直接进 T4 跑了 subagent；T5 时 seeds 才补抽。findings.md 顶部「执行偏差声明」节诚实记录此事。
+
+**与 paperterm v0.1 的关系**：本 dogfood yaml 直接可作 `tests/fixtures/glossary/raw2event_bootstrap.yaml` 种子；findings.md §7 的 8 条改进点（按 ROI 排序）是 plan §12 Phase 1 写代码时的具体输入。

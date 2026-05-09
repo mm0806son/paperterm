@@ -1,0 +1,59 @@
+# Corpus manifest — Raw2Event NeurIPS 2026 D&B paper
+# Generated: 2026-05-09 by paperterm dogfood Stage T3
+#
+# Format: one entry per line, "<absolute_path> <line_count>".
+# Lines beginning with `#` are comments and may be ignored.
+#
+# === Inclusion principle ===
+#   Include the actual paper body that the author wrote, plus any
+#   tables that paper sections \input. Exclude:
+#     - duplicate manuscript versions (raw2event.tex is the old
+#       arXiv IEEE version; double-counting forms there would
+#       inflate drift counts)
+#     - boilerplate templates (NeurIPS template demo backup)
+#     - non-prose appendices (G_license is pure legal text, no
+#       paperterm-relevant terminology)
+#     - the D&B Datasheet checklist (checklist.tex), which is a
+#       NeurIPS-mandated form, not paper prose
+#
+# === Excluded files (kept here for audit) ===
+#   /vol1/1007/projects/raw2event/doc/paper/raw2event.tex                       (576)  -- old arXiv version, content duplicates sections/*
+#   /vol1/1007/projects/raw2event/doc/paper/checklist.tex                       (251)  -- D&B checklist template, no terminology
+#   /vol1/1007/projects/raw2event/doc/paper/neurips_2026_template_demo.tex.bak   (--)  -- template backup, not part of compile
+#   /vol1/1007/projects/raw2event/doc/paper/sections/appendix/G_license.tex      (61)  -- license text, no terminology
+
+# Top-level shell (\input dispatcher; thin)
+/vol1/1007/projects/raw2event/doc/paper/neurips_2026.tex 107
+
+# Body sections (00–07 + 99 appendix dispatcher)
+/vol1/1007/projects/raw2event/doc/paper/sections/00_abstract.tex 16
+/vol1/1007/projects/raw2event/doc/paper/sections/01_introduction.tex 54
+/vol1/1007/projects/raw2event/doc/paper/sections/02_related_work.tex 103
+/vol1/1007/projects/raw2event/doc/paper/sections/03_dataset.tex 109
+/vol1/1007/projects/raw2event/doc/paper/sections/04_benchmark.tex 46
+/vol1/1007/projects/raw2event/doc/paper/sections/05_results.tex 69
+/vol1/1007/projects/raw2event/doc/paper/sections/06_discussion.tex 34
+/vol1/1007/projects/raw2event/doc/paper/sections/07_conclusion.tex 10
+/vol1/1007/projects/raw2event/doc/paper/sections/99_appendix.tex 30
+
+# Appendix A–F (G excluded; license text)
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/A_datasheet.tex 357
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/B_acquisition.tex 222
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/C_supplementary.tex 105
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/D_k_calibration.tex 455
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/E_compute.tex 66
+/vol1/1007/projects/raw2event/doc/paper/sections/appendix/F_reproducibility.tex 40
+
+# Tables (\input by §5 results / §3 dataset)
+/vol1/1007/projects/raw2event/doc/paper/tables/cross_modal.tex 26
+/vol1/1007/projects/raw2event/doc/paper/tables/k_health.tex 32
+/vol1/1007/projects/raw2event/doc/paper/tables/paired_branch_delta.tex 17
+/vol1/1007/projects/raw2event/doc/paper/tables/prior_datasets.tex 75
+/vol1/1007/projects/raw2event/doc/paper/tables/prior_datasets_full.tex 108
+/vol1/1007/projects/raw2event/doc/paper/tables/retrieval.tex 21
+/vol1/1007/projects/raw2event/doc/paper/tables/self_retrieval.tex 18
+/vol1/1007/projects/raw2event/doc/paper/tables/variant_matrix.tex 33
+/vol1/1007/projects/raw2event/doc/paper/tables/within_prefix_rho.tex 23
+/vol1/1007/projects/raw2event/doc/paper/tables/within_prefix_rho_dt.tex 24
+
+# Total (excluding comments): 26 files, 2200 lines

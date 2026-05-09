@@ -33,11 +33,8 @@ venv/
 .*.swo
 *~
 
-# Cursor / Agent 会话状态（个人，不入 git）
-.cursor/task_plan.md
-.cursor/progress.md
-.cursor/findings.md
-.cursor/memory/
+# Cursor / Agent 会话状态（整目录都是个人会话状态，不入 git）
+.cursor/
 
 # Claude Code 本地配置（每机不同）
 .claude/settings.local.json

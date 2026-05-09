@@ -26,6 +26,8 @@ classifiers = [
 dynamic = ["version"]
 dependencies = [
     "click>=8.1",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
@@ -34,6 +36,7 @@ dev = [
     "pytest-cov>=4.1",
     "ruff>=0.1.6",
     "mypy>=1.7",
+    "types-PyYAML>=6.0",
 ]
 anthropic = [
     "anthropic>=0.34",

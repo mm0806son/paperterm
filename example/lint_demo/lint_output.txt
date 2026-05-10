@@ -1,0 +1,26 @@
+section.tex:7:23  [prose]  'DAVIS-346'  →  'DAVIS346'  (davis346)
+section.tex:7:34  [prose]  'Davis346'  →  'DAVIS346'  (davis346)
+section.tex:7:52  [prose]  'davis346'  →  'DAVIS346'  (davis346)
+section.tex:11:19  [prose]  'DVS Voltmeter'  →  'DVS-Voltmeter'  (dvs_voltmeter)
+section.tex:12:1  [prose]  'DVSVoltmeter'  →  'DVS-Voltmeter'  (dvs_voltmeter)
+section.tex:21:19  [prose]  'spatial per-pixel EMD'  →  'per-pixel EMD'  
+(per_pixel_emd)
+section.tex:21:42  [prose]  'per-pixel count EMD'  →  'per-pixel EMD'  
+(per_pixel_emd)
+section.tex:22:1  [prose]  'pixel-level EMD'  →  'per-pixel EMD'  
+(per_pixel_emd)
+section.tex:23:1  [prose]  'spatial px-EMD'  →  'px-EMD'  (per_pixel_emd)
+section.tex:16:5  [prose]  'upstream diagnostic'  →  'upstream event-statistics 
+diagnostic'  (upstream_diagnostic)
+section.tex:16:30  [prose]  'upstream event-statistics scorecard'  →  'upstream 
+event-statistics diagnostic'  (upstream_diagnostic)
+section.tex:17:13  [prose]  'upstream event-statistics table'  →  'upstream 
+event-statistics diagnostic'  (upstream_diagnostic)
+section.tex:26:1  [prose]  'per-pair calibration'  →  'per-pair K calibration'  
+(per_pair_k_calibration)
+section.tex:27:1  [prose]  'per-camera-pair K calibration'  →  'per-pair K 
+calibration'  (per_pair_k_calibration)
+section.tex:29:6  [prose]  'DAVIS-346'  →  'DAVIS346'  (davis346)
+section.tex:49:29  [caption]  'spatial px-EMD'  →  'px-EMD'  (per_pixel_emd)
+
+paperterm: 16 violation(s)

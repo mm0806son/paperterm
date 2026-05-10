@@ -117,7 +117,12 @@ def _collect_spans(
     excluded: set[Path] = set()
     for pattern in exclude_globs:
         for p in paper_dir.glob(pattern):
-            excluded.add(p.resolve())
+            if p.is_dir():
+                for sub in p.rglob("*"):
+                    if sub.is_file():
+                        excluded.add(sub.resolve())
+            else:
+                excluded.add(p.resolve())
     for path in sorted(matched - excluded):
         try:
             text = path.read_text(encoding="utf-8")

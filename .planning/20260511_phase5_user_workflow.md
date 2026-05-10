@@ -70,3 +70,26 @@
 ## 待确认事项
 
 无（用户对 anthropic 砍除态度明确，sub-stage commit 节奏已定）。
+
+---
+
+## 完成记录
+
+| Sub-stage | commit | 关键产物 |
+|---|---|---|
+| P5.A | `3a5edc4` | src/paperterm/data/bootstrap_prompt.md（357 行 SoT）+ src/paperterm/prompts.py（importlib.resources 加载）+ 24 anchor/反污染 tests |
+| P5.B | `f0463f3` | src/paperterm/bootstrap.py（AST-cleaned 拼装；已修同行 inline math/cite/comment 不泄漏 + pathlib exclude dir 递归）+ 12 tests |
+| P5.C | `dc8a20b` | cli.py 加 print-prompt + bootstrap 子命令；4 步 manual flow 指引；6 CLI tests |
+| P5.D | `c412468` | prompts/glossary_bootstrap.md（byte-equal SoT）+ docs/usage.md（英文端到端文档）+ README 重写 + 删 anthropic extra + 删 example/prompt.md（git rename）+ 历史引用清理 |
+
+**全程门禁**：100 tests pass / ruff check + format / mypy strict 全绿，每 commit 通过 codex 短审。
+
+**用户验证入口**：
+- `paperterm bootstrap <paper_dir>` — 本地准备 prompt+corpus 文件
+- 粘到 Claude.ai / ChatGPT / 任意 LLM 订阅
+- 保存 YAML 回复为 `glossary.draft.yaml`
+- 人工 review → `glossary.yaml`
+- `paperterm check <paper_dir>` — 本地 lint
+- 端到端**零网络调用**；详见 docs/usage.md。
+
+**plan §6.2 anthropic provider 永久 won't-fix（v0.1）**；plan 设计文档保留作未来重启的参考稿。

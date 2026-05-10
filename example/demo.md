@@ -85,7 +85,13 @@ knows it is *not* prose.
 
 ## Where to go next
 
-- Phase 5 of plan §12: `paperterm bootstrap` + `paperterm
-  print-prompt` so the dogfood loop becomes one CLI call.
-- Phase 6: Anthropic-API provider for `bootstrap`.
-- Phase 7: docs + (optionally) JSON / SARIF report formats.
+- Phase 5 (delivered): `paperterm bootstrap` + `paperterm
+  print-prompt` make the dogfood loop a single CLI call. See
+  `docs/usage.md` for the end-to-end recipe.
+- ~~Phase 6: Anthropic-API provider for `bootstrap`.~~ **Dropped
+  in v0.1.** paperterm intentionally ships no API integration —
+  users run their own LLM (Claude.ai / ChatGPT / …) and paste the
+  YAML reply back. A future major version may revisit.
+- Phase 7 candidates: tighter docs, JSON / SARIF report formats,
+  `math:` form prefix (so glossary entries can match `$K$`-style
+  symbolic forms — see findings.md §6 P5).

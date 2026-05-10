@@ -1,7 +1,7 @@
 # `example/` — paperterm bootstrap prompt dogfood
 
 本目录是一次**端到端 dogfood**：在 paperterm CLI 实现之前，用一个
-subagent 模拟未来 `paperterm bootstrap --provider manual` 命令的执行
+subagent 模拟（彼时未实现的）`paperterm bootstrap` 命令的执行
 路径，验证 plan §8.1 设计的 **standalone bootstrap prompt** 与
 plan §5 的 **glossary YAML schema** 在真实 NeurIPS 论文上是否能产出
 可用结果。
@@ -18,7 +18,9 @@ plan §5 的 **glossary YAML schema** 在真实 NeurIPS 论文上是否能产出
 ```
 example/
 ├── README.md                    ← 本文件
-├── prompt.md                    ← paper-agnostic standalone bootstrap prompt
+│                                  (the prompt itself lives at the repo root:
+│                                   prompts/glossary_bootstrap.md, byte-equal
+│                                   to paperterm.prompts.BOOTSTRAP_PROMPT)
 ├── inputs/
 │   └── corpus_manifest.txt      ← 待扫描的 .tex 路径清单（不含正文，仅路径 + 行数）
 ├── output/
@@ -33,7 +35,7 @@ example/
 |---|---|
 | Subagent 类型 | `general-purpose`（Claude Code Agent 工具） |
 | Model | Opus（`claude-opus-4-7`） |
-| 输入 | `prompt.md`（paper-agnostic）+ `inputs/corpus_manifest.txt`（26 paths）|
+| 输入 | `prompts/glossary_bootstrap.md`（paper-agnostic）+ `inputs/corpus_manifest.txt`（26 paths）|
 | Corpus 大小 | 2200 行 / ~33K tokens（single-pass，未触发 chunked mode） |
 | Subagent 限制 | 只读 `paper/` + `example/`，只写 `example/output/`，禁 git mutating |
 | 跑前 baseline | `.cursor/dogfood_baseline_{paperterm,raw2event}.txt`（不入 git） |
@@ -58,7 +60,7 @@ git -C /vol1/1007/projects/raw2event status --short \
     > .cursor/dogfood_baseline_raw2event.txt
 
 # 2. 启动 general-purpose subagent，model = opus，brief 见 .planning/...
-#    输入：prompt.md + corpus_manifest.txt
+#    输入：prompts/glossary_bootstrap.md + corpus_manifest.txt
 #    输出限制：只能写 example/output/ 下两个文件
 #    （Claude Code: Agent tool with subagent_type=general-purpose, model=opus）
 

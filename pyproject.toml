@@ -40,9 +40,10 @@ dev = [
     "mypy>=1.7",
     "types-PyYAML>=6.0",
 ]
-anthropic = [
-    "anthropic>=0.34",
-]
+# Note: paperterm v0.1 deliberately ships no API-provider integration
+# (no `bootstrap --provider anthropic`). Users run their own LLM via
+# Claude.ai / ChatGPT / etc. and feed the YAML reply back manually.
+# A future major version may re-introduce a provider extra here.
 
 [project.scripts]
 paperterm = "paperterm.cli:main"

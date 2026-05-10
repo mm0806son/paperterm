@@ -1,7 +1,8 @@
 # paperterm dogfood run — Raw2Event NeurIPS 2026 paper
 
 Run date: 2026-05-09. Sub-agent: Claude (claude-opus-4-7).
-Inputs: `example/prompt.md` + `example/inputs/corpus_manifest.txt`.
+Inputs: `prompts/glossary_bootstrap.md` (then known as `example/prompt.md`,
+moved to `prompts/glossary_bootstrap.md` in P5.D) + `example/inputs/corpus_manifest.txt`.
 
 ## Files read
 

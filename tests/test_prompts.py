@@ -104,3 +104,25 @@ def test_bootstrap_prompt_size_is_reasonable() -> None:
 def test_bootstrap_prompt_has_no_unfilled_placeholders() -> None:
     assert "{{" not in BOOTSTRAP_PROMPT, "found unresolved {{...}} placeholder"
     assert "TODO" not in BOOTSTRAP_PROMPT
+
+
+# --------------------------------------------------------------------------- #
+# Single-source-of-truth — the checked-in prompts/glossary_bootstrap.md
+# (shipped at the repo root so users can read it on GitHub without
+# installing paperterm) must be byte-equal to BOOTSTRAP_PROMPT.
+# --------------------------------------------------------------------------- #
+
+
+def test_checked_in_prompt_matches_module() -> None:
+    from pathlib import Path
+
+    repo_root = Path(__file__).resolve().parent.parent
+    checked_in = repo_root / "prompts" / "glossary_bootstrap.md"
+    assert checked_in.is_file(), (
+        "prompts/glossary_bootstrap.md is missing; regenerate with "
+        "`paperterm print-prompt > prompts/glossary_bootstrap.md`"
+    )
+    assert checked_in.read_text(encoding="utf-8") == BOOTSTRAP_PROMPT, (
+        "prompts/glossary_bootstrap.md is out of sync with BOOTSTRAP_PROMPT; "
+        "regenerate with `paperterm print-prompt > prompts/glossary_bootstrap.md`"
+    )

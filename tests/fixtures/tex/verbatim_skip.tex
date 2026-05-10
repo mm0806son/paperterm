@@ -1,0 +1,8 @@
+Before the verbatim block.
+\begin{verbatim}
+ForbiddenName inside verbatim must NOT be lintable
+\end{verbatim}
+After the verbatim block, ProseTerm is lintable.
+\begin{lstlisting}[language=Python]
+forbidden_inside_lstlisting = True
+\end{lstlisting}

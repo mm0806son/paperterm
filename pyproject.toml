@@ -28,6 +28,7 @@ dependencies = [
     "click>=8.1",
     "pydantic>=2.5",
     "pyyaml>=6.0",
+    "pylatexenc>=2.10",
 ]
 
 [project.optional-dependencies]
@@ -78,6 +79,13 @@ select = [
 python_version = "3.10"
 strict = true
 files = ["src/paperterm", "tests"]
+
+[[tool.mypy.overrides]]
+# pylatexenc ships no type stubs (no py.typed marker, no stub package on
+# typeshed); silence the missing-imports complaint without weakening
+# strict mode globally.
+module = "pylatexenc.*"
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

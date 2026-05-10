@@ -30,8 +30,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # 创建虚拟环境（首次）
 python3.11 -m venv .venv
 
-# 安装（开发模式，含 Anthropic provider 与开发依赖）
-.venv/bin/pip install -e ".[anthropic,dev]"
+# 安装（开发模式，含开发依赖）
+.venv/bin/pip install -e ".[dev]"
 
 # 运行 CLI
 .venv/bin/paperterm bootstrap <paper_dir>

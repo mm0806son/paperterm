@@ -106,7 +106,7 @@ def test_comments_and_multiline_commented_blocks_are_skipped() -> None:
     assert "ProseAfterComment" in blob
     assert "ForbiddenInComment" not in blob
     assert "ForbiddenInsideCommentedFigure" not in blob, (
-        "dogfood findings P2 (multi-line commented figure) regression"
+        "multi-line commented figure block leaked through skip rule"
     )
 
 

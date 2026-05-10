@@ -104,24 +104,22 @@ def test_explicit_suggest_overrides_canonical() -> None:
     g = _glossary(
         Concept.model_validate(
             {
-                "id": "px_emd",
+                "id": "map_score",
                 "category": "metric",
-                "canonical": "px-EMD",
+                "canonical": "mAP",
                 "aliases": [
-                    Form.model_validate(
-                        {"form": "spatial px-EMD", "suggest": "px-EMD"}
-                    ).model_dump(),
-                    Form.model_validate({"form": "spatial per-pixel EMD"}).model_dump(),
+                    Form.model_validate({"form": "weighted mAP", "suggest": "mAP"}).model_dump(),
+                    Form.model_validate({"form": "macro mAP"}).model_dump(),
                 ],
             }
         )
     )
-    spans = _spans("We report spatial px-EMD and the spatial per-pixel EMD across all variants.")
+    spans = _spans("We report weighted mAP and the macro mAP across all variants.")
     vs = list(Linter(g).check_spans(spans))
     suggestions = {v.matched_text: v.suggestion for v in vs}
     assert suggestions == {
-        "spatial px-EMD": "px-EMD",
-        "spatial per-pixel EMD": "px-EMD",
+        "weighted mAP": "mAP",
+        "macro mAP": "mAP",
     }
 
 
@@ -129,18 +127,18 @@ def test_case_sensitive_concept_distinguishes_case() -> None:
     g = _glossary(
         Concept.model_validate(
             {
-                "id": "davis346",
+                "id": "mscoco",
                 "category": "dataset",
-                "canonical": "DAVIS346",
+                "canonical": "MS-COCO",
                 "case_sensitive": True,
-                "aliases": [Form(form="Davis346").model_dump()],
+                "aliases": [Form(form="Ms-Coco").model_dump()],
             }
         )
     )
-    src = "Davis346 is wrong; DAVIS346 is fine; davis346 is unrelated."
+    src = "Ms-Coco is wrong; MS-COCO is fine; ms-coco is unrelated."
     spans = _spans(src)
     vs = list(Linter(g).check_spans(spans))
-    assert [v.matched_text for v in vs] == ["Davis346"]
+    assert [v.matched_text for v in vs] == ["Ms-Coco"]
 
 
 def test_whole_word_default_avoids_substring_matches() -> None:

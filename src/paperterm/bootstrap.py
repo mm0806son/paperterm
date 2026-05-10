@@ -14,9 +14,9 @@ The on-disk format matches the ``Corpus`` section of
 prefixed with its absolute 1-based line number so that the LLM can
 fill ``locations.line`` by copying instead of counting.
 
-This module deliberately ships *no* network code: paperterm v0.1 does
-not bundle a ``--provider anthropic`` or any other API path. Users
-run their own LLM and paste the reply back as ``glossary.draft.yaml``.
+This module deliberately ships *no* network code: paperterm v0.1
+does not bundle any provider-specific API path. Users run their
+own LLM and paste the reply back as ``glossary.draft.yaml``.
 """
 
 from __future__ import annotations

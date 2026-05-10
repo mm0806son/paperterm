@@ -1,0 +1,46 @@
+\section{Object detection on MS-COCO}
+\label{sec:experiments}
+
+% Top-level comment with MSCOCO inside — should be ignored.
+
+We fine-tune a ResNet-50 backbone with batch normalization on
+MS-COCO.  A few earlier drafts wrote ResNet50, Resnet-50, or even
+Res-Net50.  The dataset is sometimes written as MSCOCO, MS COCO,
+or ms-coco in passing, none of which match the canonical name.
+
+We report mean Average Precision across all categories.  Older
+sections referred to it as Mean Avg. Precision, mean avg precision,
+or simply average precision.  In free prose we should never see the
+abbreviation mAP@50 — it is reserved for tables and figures.
+
+The post-processing pipeline normalises features with batch
+normalization.  Avoid writing this as batch-normalization, as
+batch norm, or as BatchNorm.
+
+We compute Intersection over Union between predicted and ground
+truth boxes.  Earlier versions wrote it as intersection-over-union,
+which is an alias.  Some authors uppercase it as IOU rather than
+the canonical IoU.
+
+Inline math like $\mathrm{IoU} = \frac{|A \cap B|}{|A \cup B|}$
+and identifiers inside \cite{ResNet50:2016, MSCOCO-extended} or
+\ref{tab:MSCOCO-summary} should NOT trigger any warning.
+
+\begin{verbatim}
+ResNet50 inside a verbatim block is also fine; paperterm skips it.
+\end{verbatim}
+
+\begin{table}[t]
+  \centering
+  \caption{Per-category mAP@50 with BN backbone.}
+  \label{tab:summary}
+  \begin{tabular}{lr}
+    Method        & mAP@50 \\
+    BN baseline   & 0.42 \\
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \caption{Confusion analysis using mAP@50.}
+\end{figure}

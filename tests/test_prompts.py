@@ -44,32 +44,6 @@ def test_bootstrap_prompt_contains_anchor(anchor: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Anti-pollution — worked examples must not name any concept the dogfood
-# corpus (Raw2Event paper) actually uses, otherwise users running the
-# prompt against that paper would see seeded matches that look like real
-# detections.
-# --------------------------------------------------------------------------- #
-
-
-_FORBIDDEN_KEYWORDS = (
-    r"polarity deviation",
-    r"per-pixel emd",
-    r"davis346",
-    r"raw2event",
-    r"dvs[- ]?voltmeter",
-    r"qkformer",
-)
-
-
-@pytest.mark.parametrize("keyword", _FORBIDDEN_KEYWORDS)
-def test_bootstrap_prompt_has_no_dogfood_pollution(keyword: str) -> None:
-    assert not re.search(keyword, BOOTSTRAP_PROMPT, re.IGNORECASE), (
-        f"prompt contains dogfood-corpus keyword {keyword!r}; worked "
-        "examples must use synthetic concepts only"
-    )
-
-
-# --------------------------------------------------------------------------- #
 # Schema-field invariants — the prompt must not authorise any output
 # field/structure that the paperterm linter then rejects.
 # --------------------------------------------------------------------------- #

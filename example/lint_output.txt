@@ -1,0 +1,23 @@
+section.tex:12:28  [prose]  'Mean Avg. Precision'  →  'mean Average Precision'
+(mean_average_precision)
+section.tex:12:49  [prose]  'mean avg precision'  →  'mean Average Precision'
+(mean_average_precision)
+section.tex:13:11  [prose]  'average precision'  →  'mean Average Precision'
+(mean_average_precision)
+section.tex:21:44  [prose]  'intersection-over-union'  →  'Intersection over
+Union'  (intersection_over_union)
+section.tex:22:50  [prose]  'IOU'  →  'IoU'  (intersection_over_union)
+section.tex:7:38  [prose]  'ResNet50'  →  'ResNet-50'  (resnet50)
+section.tex:7:48  [prose]  'Resnet-50'  →  'ResNet-50'  (resnet50)
+section.tex:8:1  [prose]  'Res-Net50'  →  'ResNet-50'  (resnet50)
+section.tex:8:49  [prose]  'MSCOCO'  →  'MS-COCO'  (mscoco)
+section.tex:8:57  [prose]  'MS COCO'  →  'MS-COCO'  (mscoco)
+section.tex:9:4  [prose]  'ms-coco'  →  'MS-COCO'  (mscoco)
+section.tex:17:39  [prose]  'batch-normalization'  →  'batch normalization'
+(batch_normalization)
+section.tex:18:1  [prose]  'batch norm'  →  'batch normalization'
+(batch_normalization)
+section.tex:18:19  [prose]  'BatchNorm'  →  'batch normalization'
+(batch_normalization)
+
+paperterm: 14 violation(s)

@@ -1,0 +1,74 @@
+# Synthetic CV-domain glossary used by the paperterm walkthrough.
+# Five concepts cover the typical drift patterns paperterm targets:
+#
+#   - capitalisation drift            (case-sensitive concept)
+#   - hyphen / spacing drift          (run-together vs hyphenated)
+#   - synonym drift                   (multiple names for the same metric)
+#   - allowed short form in tables    (mAP@50 / BN restricted by context)
+#   - alias forbidden in any context  (case-insensitive aliases)
+
+version: 1
+
+defaults:
+  case_sensitive: false
+  whole_word: true
+
+concepts:
+  - id: mean_average_precision
+    category: metric
+    canonical: "mean Average Precision"
+    allowed_forms:
+      - form: "mAP"
+        contexts: any
+      - form: "mAP@50"
+        contexts: [table, figure, caption]
+      - form: "mAP@50:95"
+        contexts: [table, figure, caption]
+    aliases:
+      - form: "Mean Avg. Precision"
+      - form: "mean avg precision"
+      - form: "average precision"
+        suggest: "mean Average Precision"
+
+  - id: intersection_over_union
+    category: metric
+    canonical: "Intersection over Union"
+    allowed_forms:
+      - form: "IoU"
+        case_sensitive: true
+        contexts: any
+    aliases:
+      - form: "intersection-over-union"
+      - form: "IOU"
+        case_sensitive: true
+        suggest: "IoU"
+
+  - id: resnet50
+    category: model
+    canonical: "ResNet-50"
+    case_sensitive: true
+    aliases:
+      - form: "ResNet50"
+      - form: "Resnet-50"
+      - form: "resnet-50"
+      - form: "Res-Net50"
+
+  - id: mscoco
+    category: dataset
+    canonical: "MS-COCO"
+    case_sensitive: true
+    aliases:
+      - form: "MSCOCO"
+      - form: "MS COCO"
+      - form: "ms-coco"
+
+  - id: batch_normalization
+    category: pipeline
+    canonical: "batch normalization"
+    allowed_forms:
+      - form: "BN"
+        contexts: [table, figure, caption]
+    aliases:
+      - form: "batch-normalization"
+      - form: "batch norm"
+      - form: "BatchNorm"

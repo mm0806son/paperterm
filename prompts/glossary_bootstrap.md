@@ -57,8 +57,8 @@ and `=== END CORPUS ===` markers, do the following:
    variants that refer to the same entity. Variants include:
    - Full form vs abbreviation: `Mean Absolute Error` ↔ `MAE`
    - Hyphen variants: `pixel level` ↔ `pixel-level`
-   - Word-order variants: `per-pair calibration K` ↔ `per-pair K
-     calibration`
+   - Word-order variants: `cosine learning rate schedule` ↔
+     `learning rate cosine schedule`
    - Near-synonyms used interchangeably for the same underlying
      concept (NOT for variants that the author treats as
      deliberately distinct concepts)
@@ -273,7 +273,7 @@ keyword list to look for.
 
 Append the LaTeX prose between the markers below.
 
-**Required injection format** (the runner / subagent must follow
+**Required injection format** (the runner or human user must follow
 this so that `locations.line` values are verifiable):
 
 - Each file is preceded by a header line `=== FILE: <relative-path> ===`

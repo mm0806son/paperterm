@@ -89,8 +89,8 @@ class FoundFormLocation(BaseModel):
 class FoundForm(BaseModel):
     """Bootstrap-only: a form actually observed in the corpus.
 
-    ``count`` must equal ``len(locations)`` (plan dogfood feedback,
-    enforced here so malformed drafts surface during loading).
+    ``count`` must equal ``len(locations)``; enforced here so
+    malformed bootstrap drafts surface during loading.
     """
 
     model_config = ConfigDict(extra="forbid", frozen=True)

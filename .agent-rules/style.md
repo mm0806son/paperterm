@@ -82,7 +82,7 @@ paperterm 的核心质量指标（区别于 ML 项目的 mAP / FPS 等）：
 **何时触发**：
 - 完成一个功能分支或逻辑完整的代码块后（对应实施流程第 5 步）
 - 修改核心代码（lint engine、glossary loader、LLM provider 等）后
-- 用户额外要求时（例如 vibe coding 初始化阶段，每个 Stage 完成都过审）
+- 用户额外要求时（例如阶段性发布前，每个 sub-stage 完成都过审）
 
 **审查重点**：
 - 代码正确性与潜在 bug

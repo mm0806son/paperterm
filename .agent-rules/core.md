@@ -15,7 +15,7 @@
 |---|------|--------|
 | C1 | LaTeX-aware lint engine | `pylatexenc` AST、context-aware（math / verbatim / cite skip） |
 | C2 | Glossary YAML schema with cross-paper extends | pydantic、`extends:` 继承、Vale-compatible 家族相似 |
-| C3 | LLM bootstrap (manual + Anthropic) | standalone prompt、provider-agnostic、`glossary.draft.yaml` |
+| C3 | LLM bootstrap (manual mode only — no API integration) | standalone prompt、`glossary.draft.yaml` 由用户用自己的 LLM 生成 |
 
 目标：`git clone` 后 `pip install -e .` 即用；不上 PyPI（库形式分发即可）。
 

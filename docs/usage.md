@@ -14,7 +14,7 @@ This page walks through the end-to-end workflow from a clean clone.
 git clone git@github.com:mm0806son/paperterm.git
 cd paperterm
 python3.11 -m venv .venv
-.venv/bin/pip install -e ".[dev]"
+.venv/bin/pip install -e .          # add ".[dev]" if you also want pytest / ruff / mypy
 .venv/bin/paperterm version   # → "paperterm 0.1.0.dev0"
 ```
 
@@ -116,8 +116,7 @@ concepts:
 
 The `paperterm:base/<file>` URI dispatches to the YAML files
 shipped under `src/paperterm/data/base/`. See
-`example/raw2event_glossary.yaml` for a complete real-world
-example.
+`example/glossary.yaml` for a small worked example.
 
 ## 4. Lint
 
@@ -150,7 +149,6 @@ the alias's `suggest:` field, falling back to the concept's
 
 ## Reference
 
-- Detailed design: `.planning/20260508_paperterm_v0.1_design.md`
-- Worked dogfood example: `example/` (full prompt run on the
-  Raw2Event NeurIPS paper, hand-curated glossary, captured
-  `paperterm check` output, evaluation notes).
+- Synthetic worked example: `example/` (small CV-domain glossary,
+  hand-written `.tex` exercising every drift category, captured
+  `paperterm check` output).

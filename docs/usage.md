@@ -15,7 +15,7 @@ git clone git@github.com:mm0806son/paperterm.git
 cd paperterm
 python3.11 -m venv .venv
 .venv/bin/pip install -e .          # add ".[dev]" if you also want pytest / ruff / mypy
-.venv/bin/paperterm version   # → "paperterm 0.1.0.dev0"
+.venv/bin/paperterm version   # → "paperterm 1.0.0"
 ```
 
 paperterm runs on Python ≥ 3.10.

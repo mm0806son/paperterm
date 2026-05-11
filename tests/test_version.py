@@ -1,9 +1,8 @@
 """Smoke tests for the ``paperterm version`` subcommand.
 
-These tests pin the Phase 1 completion criterion from the design doc
-(§12 Phase 1): ``paperterm version`` prints ``paperterm 0.1.0.dev0``,
-and the package version string is the same Python-level
-``paperterm.__version__``.
+The tests pin the released version string in two places so the
+single source of truth in ``src/paperterm/__init__.py`` cannot
+silently drift away from what the CLI advertises.
 """
 
 from __future__ import annotations
@@ -14,8 +13,8 @@ import paperterm
 from paperterm.cli import main
 
 
-def test_module_version_is_dev0() -> None:
-    assert paperterm.__version__ == "0.1.0.dev0"
+def test_module_version_pinned() -> None:
+    assert paperterm.__version__ == "1.0.0"
 
 
 def test_cli_version_subcommand_prints_module_version() -> None:
